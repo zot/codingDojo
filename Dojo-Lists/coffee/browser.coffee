@@ -39,5 +39,39 @@ modules =
   './lodash.min': -> window._
   './lists': lists
   './base': lists
-  './testing': lists
+  './testing': ->
+    console.log "Accessing ./testing"
+    rt = window.Lists.runTests
+    window.Lists.runTests = (tests)->
+      rt tests
+      displayResults()
+    window.Lists
   './testLists': lists
+
+displayResults = ->
+  window.setTimeout (->
+    results = document.getElementById 'results'
+    if results
+      stats = window.Lists.stats
+      if stats.failures
+        results.classList.remove 'succeeded'
+        results.classList.add 'failed'
+        if stats.successes
+          results.innerHTML = "Succeeded: <b>#{stats.successes}</b><br>Failed: <b>#{stats.failures}"
+        else
+          results.innerHTML = "Succeeded: <b>None</b><br>Failed: <b>#{stats.failures}"
+        showTraces()
+      else
+        results.classList.add 'succeeded'
+        results.classList.remove 'failed'
+        if stats.failures
+          results.innerHTML = "Succeeded: <b>#{stats.successes}</b><br>Failed: <b>#{stats.failures}"
+        else
+          results.innerHTML = "Succeeded: <b>#{stats.successes}</b><br>Failed: <b>None</b>"), 1
+
+showTraces = ->
+  stats = window.Lists.stats
+  traceDiv = document.getElementById 'traces'
+  traceDiv.innerHTML = ''
+  for trace in stats.traces
+    traceDiv.innerHTML += "<div>#{trace}</div><br>"

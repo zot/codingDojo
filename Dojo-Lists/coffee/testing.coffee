@@ -32,6 +32,7 @@ stats =
   successes: 0
   failures: 0
   failed: []
+  traces: []
 
 eq = (a, b)-> a == b or (eqArray a, b)
 
@@ -64,10 +65,16 @@ run = (name, func)->
   catch err
     stats.failures++
     stats.failed.push name
+    stats.traces.push "#{name}: #{err.stack}"
     log "\nFailure, #{name}: #{err.stack}"
+
+runTests = (tests)->
+  for testName, testFunc of tests
+    run testName, testFunc
 
 root.assertEq = assertEq
 root.assertFail = assertFail
 root.run = run
+root.runTests = runTests
 root.stats = stats
 root.ifNoBrowser = ifNoBrowser

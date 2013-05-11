@@ -37,6 +37,7 @@ require './testing'
   rest,
   len,
   run,
+  runTests,
   assertEq,
   assertFail,
   ifNoBrowser,
@@ -44,14 +45,15 @@ require './testing'
 
 ifNoBrowser -> console.log 'Testing...'
 
-run 'test1', -> assertEq "1", "1"
-run 'test2', -> assertEq String(cons 1, Nil), "List [1]"
-run 'test3', -> assertEq String(list 1, 2, 3), "List [1, 2, 3]"
-run 'test4', -> assertFail (-> first Nil), "Not a list!"
-run 'test5', -> assertFail (-> first 1), "Not a list!"
-run 'test6', -> assertEq first(list 1, 2, 3), 1
-run 'test7', -> assertEq first(rest list 1, 2, 3), 2
-run 'test8', -> assertEq len(list 1, 2, 3, 4), 4
+runTests
+  test1: -> assertEq "1", "1"
+  test2: -> assertEq String(cons 1, Nil), "List [1]"
+  test3: -> assertEq String(list 1, 2, 3), "List [1, 2, 3]"
+  test4: -> assertFail (-> first Nil), "Not a list!"
+  test5: -> assertFail (-> first 1), "Not a list!"
+  test6: -> assertEq first(list 1, 2, 3), 1
+  test7: -> assertEq first(rest list 1, 2, 3), 2
+  test8: -> assertEq len(list 1, 2, 3, 4), 4
 
 ifNoBrowser -> console.log '\nDone'
 if !L.stats.failures then console.log "Succeeded all #{L.stats.successes} tests."

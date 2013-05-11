@@ -30,52 +30,47 @@ Tests for lists
 
 
 (function() {
-  var L, Nil, assertEq, assertFail, cons, f, first, ifNoBrowser, len, list, rest, root, run, _i, _len, _ref;
+  var L, Nil, assertEq, assertFail, cons, f, first, ifNoBrowser, len, list, rest, root, run, runTests, _i, _len, _ref;
 
   L = root = module.exports = require('./lists');
 
   require('./testing');
 
-  list = L.list, cons = L.cons, Nil = L.Nil, first = L.first, rest = L.rest, len = L.len, run = L.run, assertEq = L.assertEq, assertFail = L.assertFail, ifNoBrowser = L.ifNoBrowser;
+  list = L.list, cons = L.cons, Nil = L.Nil, first = L.first, rest = L.rest, len = L.len, run = L.run, runTests = L.runTests, assertEq = L.assertEq, assertFail = L.assertFail, ifNoBrowser = L.ifNoBrowser;
 
   ifNoBrowser(function() {
     return console.log('Testing...');
   });
 
-  run('test1', function() {
-    return assertEq("1", "1");
-  });
-
-  run('test2', function() {
-    return assertEq(String(cons(1, Nil)), "List [1]");
-  });
-
-  run('test3', function() {
-    return assertEq(String(list(1, 2, 3)), "List [1, 2, 3]");
-  });
-
-  run('test4', function() {
-    return assertFail((function() {
-      return first(Nil);
-    }), "Not a list!");
-  });
-
-  run('test5', function() {
-    return assertFail((function() {
-      return first(1);
-    }), "Not a list!");
-  });
-
-  run('test6', function() {
-    return assertEq(first(list(1, 2, 3)), 1);
-  });
-
-  run('test7', function() {
-    return assertEq(first(rest(list(1, 2, 3))), 2);
-  });
-
-  run('test8', function() {
-    return assertEq(len(list(1, 2, 3, 4)), 4);
+  runTests({
+    test1: function() {
+      return assertEq("1", "1");
+    },
+    test2: function() {
+      return assertEq(String(cons(1, Nil)), "List [1]");
+    },
+    test3: function() {
+      return assertEq(String(list(1, 2, 3)), "List [1, 2, 3]");
+    },
+    test4: function() {
+      return assertFail((function() {
+        return first(Nil);
+      }), "Not a list!");
+    },
+    test5: function() {
+      return assertFail((function() {
+        return first(1);
+      }), "Not a list!");
+    },
+    test6: function() {
+      return assertEq(first(list(1, 2, 3)), 1);
+    },
+    test7: function() {
+      return assertEq(first(rest(list(1, 2, 3))), 2);
+    },
+    test8: function() {
+      return assertEq(len(list(1, 2, 3, 4)), 4);
+    }
   });
 
   ifNoBrowser(function() {

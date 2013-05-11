@@ -30,14 +30,15 @@ Wimpy testing framework
 
 
 (function() {
-  var assertEq, assertFail, eq, eqArray, ifNoBrowser, log, root, run, stats;
+  var assertEq, assertFail, eq, eqArray, ifNoBrowser, log, root, run, runTests, stats;
 
   root = module.exports = require('./base');
 
   stats = {
     successes: 0,
     failures: 0,
-    failed: []
+    failed: [],
+    traces: []
   };
 
   eq = function(a, b) {
@@ -102,8 +103,20 @@ Wimpy testing framework
       err = _error;
       stats.failures++;
       stats.failed.push(name);
+      stats.traces.push("" + name + ": " + err.stack);
       return log("\nFailure, " + name + ": " + err.stack);
     }
+  };
+
+  runTests = function(tests) {
+    var testFunc, testName, _results;
+
+    _results = [];
+    for (testName in tests) {
+      testFunc = tests[testName];
+      _results.push(run(testName, testFunc));
+    }
+    return _results;
   };
 
   root.assertEq = assertEq;
@@ -111,6 +124,8 @@ Wimpy testing framework
   root.assertFail = assertFail;
 
   root.run = run;
+
+  root.runTests = runTests;
 
   root.stats = stats;
 

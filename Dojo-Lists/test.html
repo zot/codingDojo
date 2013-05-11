@@ -28,7 +28,23 @@ misrepresented as being the original software.
     <script src="js/lists.js"></script>
     <script src="js/testing.js"></script>
     <script src="js/testLists.js"></script>
+    <style>
+      #results {
+        padding: 8px;
+      }
+      .succeeded {
+        background: #0f0;
+      }
+      .failed {
+        background: #f00;
+      }
+      #traces {
+        white-space: pre;
+      }
+    </style>
   </head>
   <body>
+    <div id='results'></div>
+    <div id='traces'></div>
   </body>
 </html>

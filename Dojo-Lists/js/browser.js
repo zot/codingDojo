@@ -25,7 +25,7 @@ misrepresented as being the original software.
 
 
 (function() {
-  var lists, modules;
+  var displayResults, lists, modules, showTraces;
 
   lists = function() {
     return window.Lists;
@@ -54,8 +54,62 @@ misrepresented as being the original software.
     },
     './lists': lists,
     './base': lists,
-    './testing': lists,
+    './testing': function() {
+      var rt;
+
+      console.log("Accessing ./testing");
+      rt = window.Lists.runTests;
+      window.Lists.runTests = function(tests) {
+        rt(tests);
+        return displayResults();
+      };
+      return window.Lists;
+    },
     './testLists': lists
+  };
+
+  displayResults = function() {
+    return window.setTimeout((function() {
+      var results, stats;
+
+      results = document.getElementById('results');
+      if (results) {
+        stats = window.Lists.stats;
+        if (stats.failures) {
+          results.classList.remove('succeeded');
+          results.classList.add('failed');
+          if (stats.successes) {
+            results.innerHTML = "Succeeded: <b>" + stats.successes + "</b><br>Failed: <b>" + stats.failures;
+          } else {
+            results.innerHTML = "Succeeded: <b>None</b><br>Failed: <b>" + stats.failures;
+          }
+          return showTraces();
+        } else {
+          results.classList.add('succeeded');
+          results.classList.remove('failed');
+          if (stats.failures) {
+            return results.innerHTML = "Succeeded: <b>" + stats.successes + "</b><br>Failed: <b>" + stats.failures;
+          } else {
+            return results.innerHTML = "Succeeded: <b>" + stats.successes + "</b><br>Failed: <b>None</b>";
+          }
+        }
+      }
+    }), 1);
+  };
+
+  showTraces = function() {
+    var stats, trace, traceDiv, _i, _len, _ref, _results;
+
+    stats = window.Lists.stats;
+    traceDiv = document.getElementById('traces');
+    traceDiv.innerHTML = '';
+    _ref = stats.traces;
+    _results = [];
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      trace = _ref[_i];
+      _results.push(traceDiv.innerHTML += "<div>" + trace + "</div><br>");
+    }
+    return _results;
   };
 
 }).call(this);
