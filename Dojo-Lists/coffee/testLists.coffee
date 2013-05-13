@@ -53,7 +53,6 @@ runTests
   test5: -> assertFail (-> first 1), "Not a list!"
   test6: -> assertEq first(list 1, 2, 3), 1
   test7: -> assertEq first(rest list 1, 2, 3), 2
-  test8: -> assertEq len(list 1, 2, 3, 4), 4
 
 ifNoBrowser -> console.log '\nDone'
 if !L.stats.failures then console.log "Succeeded all #{L.stats.successes} tests."

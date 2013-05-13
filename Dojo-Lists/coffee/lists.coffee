@@ -43,8 +43,6 @@ rest = (l)-> checkList l, -> l (a, b)-> b
 
 checkList = (l, cont)-> if l instanceof Cons then cont() else throw new Error "Not a list!"
 
-len = (l)-> if l == Nil then 0 else 1 + len rest l
-
 # Using classes for type checking and for printing
 
 class Cons
