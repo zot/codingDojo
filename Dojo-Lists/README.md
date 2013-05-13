@@ -3,11 +3,12 @@
 Katas
 
 * length of a list
+* Swap genders of people in a list
+* Find person with the longest name in a list of poeple
 * reverse a list
-* double numbers in a list
-* sum numbers in a list
-* map "double" function over list (and write map)
-* sum numbers using foldl (and write foldl)
+* map "genderSwap" function over list of people (and write map)
+* find person with longest name using foldl (and write foldl)
+* get the length of a list, using foldl
 * reverse using foldl
 
 ---
